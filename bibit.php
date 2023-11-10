@@ -1,7 +1,9 @@
 <?php
   include('layout/sidebar.php');
   include('layout/navbar.php');
-
+  require_once "koneksi.php";
+  $sql = "SELECT * FROM bibit";
+  $bibit = $conn->query($sql);
 ?>
 <div class="mr-5 ml-5">
     <h1>Data Bibit</h1>
@@ -19,30 +21,23 @@
             </tr>
         </thead>
         <tbody>
+            <?php
+                $no=1;
+                while($row = mysqli_fetch_assoc($bibit)){
+            ?>
             <tr>
-                <th scope="row">1</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="editBibit.php" class="btn btn-sm btn-warning"><i class="fas fa-fw fa-edit"></i></a>
-                    <a href="hapusBibit.php" class="btn btn-sm btn-danger"><i class="fas fa-fw fa-trash-alt"></i></a>
+                <td><?php echo $no; ?></td>
+                <td><?php echo $row["jenis_bibit"]; ?></td>
+                <td><?php echo $row["tgl_bibit"]; ?></td>
+                <td><?php echo $row["jumlah_bibit"]; ?> <span>kg<span></td>
+                <td><a href="editBibit.php?id=<?php echo $row["id_bibit"] ?>" class="btn btn-sm btn-warning"><i
+                            class="fas fa-fw fa-edit"></i></a>
+                    <a href="hapusBibit.php?id=<?php echo $row["id_bibit"] ?>" class="btn btn-sm btn-danger"
+                        onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')"><i
+                            class="fas fa-fw fa-trash-alt"></i></a>
                 </td>
             </tr>
+            <?php $no++; } ?>
         </tbody>
     </table>
 </div>
